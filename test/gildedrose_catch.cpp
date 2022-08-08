@@ -28,14 +28,15 @@ TEST_CASE("UpdateQuality_SingleItem") {
     vector<Item> items;
     Item genericItem(genericItemName, 1, 1);
     items.push_back(genericItem);
-
     GildedRose app(items);
 
-    app.updateQuality();
+    SECTION("Updating item once"){
 
-    AssertItemUpdated(testA, items.front());
+        app.updateQuality();
+        AssertItemUpdated(genericItem, items.front());
+    }
+
 }
-
 TEST_CASE("UpdateQuality_SingleItem_QualityLossTwice_AfterSelltime") {
 
     vector<Item> items;
@@ -44,10 +45,21 @@ TEST_CASE("UpdateQuality_SingleItem_QualityLossTwice_AfterSelltime") {
 
     GildedRose app(items);
 
-    app.updateQuality();
-    REQUIRE(items.front().quality == 8);
-    app.updateQuality();
-    REQUIRE(items.front().quality == 6);
+    SECTION("Updating item once"){
+
+        app.updateQuality();
+        const auto updatedItem = items.front();
+        REQUIRE(updatedItem.sellIn == -1);
+        REQUIRE(updatedItem.quality == 8);
+
+            SECTION("Updating item again"){
+
+                app.updateQuality();
+                const auto updatedItem = items.front();
+                REQUIRE(updatedItem.sellIn == -2);
+                REQUIRE(updatedItem.quality == 6);
+            }
+    }
 }
 
 TEST_CASE("UpdateQuality_SingleItem_UpdateZeroQuality") {
@@ -60,7 +72,9 @@ TEST_CASE("UpdateQuality_SingleItem_UpdateZeroQuality") {
 
     app.updateQuality();
 
-    REQUIRE(items.front().quality >= 0);
+    const auto updatedItem = items.front();
+    REQUIRE(updatedItem.sellIn == -1);
+    REQUIRE(updatedItem.quality == 0);
 }
 
 TEST_CASE("UpdateQuality_AgedBree_IncreaseInQuality") {
