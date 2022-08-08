@@ -18,11 +18,16 @@ void AssertItemUpdated(const Item& beforeUpdate, const Item& toTest)
     REQUIRE(toTest.quality == (beforeUpdate.quality-1));
 }
 
+const std::string genericItemName = "foo";
+const std::string backstagePassName = "Backstage passes to a TAFKAL80ETC concert";
+const std::string sulfurasName = "Sulfuras, Hand of Ragnaros";
+const std::string agedBreeName = "Aged Brie";
+
 TEST_CASE("UpdateQuality_SingleItem") {
 
     vector<Item> items;
-    Item testA("foo", 1, 1);
-    items.push_back(testA);
+    Item genericItem(genericItemName, 1, 1);
+    items.push_back(genericItem);
 
     GildedRose app(items);
 
@@ -34,8 +39,8 @@ TEST_CASE("UpdateQuality_SingleItem") {
 TEST_CASE("UpdateQuality_SingleItem_QualityLossTwice_AfterSelltime") {
 
     vector<Item> items;
-    Item testA("foo", 0, 10);
-    items.push_back(testA);
+    Item genericItem(genericItemName, 0, 10);
+    items.push_back(genericItem);
 
     GildedRose app(items);
 
@@ -48,8 +53,8 @@ TEST_CASE("UpdateQuality_SingleItem_QualityLossTwice_AfterSelltime") {
 TEST_CASE("UpdateQuality_SingleItem_UpdateZeroQuality") {
 
     vector<Item> items;
-    Item testA("foo", 0, 0);
-    items.push_back(testA);
+    Item genericItem(genericItemName, 0, 0);
+    items.push_back(genericItem);
 
     GildedRose app(items);
 
@@ -61,8 +66,8 @@ TEST_CASE("UpdateQuality_SingleItem_UpdateZeroQuality") {
 TEST_CASE("UpdateQuality_AgedBree_IncreaseInQuality") {
 
     vector<Item> items;
-    Item testA("Aged Brie", 10, 10);
-    items.push_back(testA);
+    Item agedBree(agedBreeName, 10, 10);
+    items.push_back(agedBree);
 
     GildedRose app(items);
 
@@ -76,8 +81,8 @@ TEST_CASE("UpdateQuality_AgedBree_IncreaseInQuality") {
 TEST_CASE("UpdateQuality_AgedBree_IncreaseInQuality_NotGreaterThan50") {
 
     vector<Item> items;
-    Item testA("Aged Brie", 10, 50);
-    items.push_back(testA);
+    Item agedBree(agedBreeName, 10, 50);
+    items.push_back(agedBree);
 
     GildedRose app(items);
 
@@ -88,7 +93,7 @@ TEST_CASE("UpdateQuality_AgedBree_IncreaseInQuality_NotGreaterThan50") {
 TEST_CASE("UpdateQuality_Sulfuras_NeverChangesValue") {
 
     vector<Item> items;
-    Item sulfuras("Sulfuras, Hand of Ragnaros", 1, 50);
+    Item sulfuras(sulfurasName, 1, 50);
     items.push_back(sulfuras);
 
     GildedRose app(items);
@@ -103,7 +108,7 @@ TEST_CASE("UpdateQuality_Sulfuras_NeverChangesValue") {
 TEST_CASE("UpdateQuality_Sulfuras_NeverChangesSelldate") {
 
     vector<Item> items;
-    Item sulfuras("Sulfuras, Hand of Ragnaros", 1, 50);
+    Item sulfuras(sulfurasName, 1, 50);
     items.push_back(sulfuras);
 
     GildedRose app(items);
@@ -118,8 +123,8 @@ TEST_CASE("UpdateQuality_Sulfuras_NeverChangesSelldate") {
 TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality") {
 
     vector<Item> items;
-    Item testA("Backstage passes to a TAFKAL80ETC concert", 20, 10);
-    items.push_back(testA);
+    Item backstagePass(backstagePassName, 20, 10);
+    items.push_back(backstagePass);
 
     GildedRose app(items);
 
@@ -133,8 +138,8 @@ TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality") {
 TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality_10dayOrLess") {
 
     vector<Item> items;
-    Item testA("Backstage passes to a TAFKAL80ETC concert", 10, 10);
-    items.push_back(testA);
+    Item backstagePass(backstagePassName, 10, 10);
+    items.push_back(backstagePass);
 
     GildedRose app(items);
 
@@ -148,8 +153,8 @@ TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality_10dayOrLess") {
 TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality_5dayOrLess") {
 
     vector<Item> items;
-    Item testA("Backstage passes to a TAFKAL80ETC concert", 5, 10);
-    items.push_back(testA);
+    Item backstagePass(backstagePassName, 5, 10);
+    items.push_back(backstagePass);
 
     GildedRose app(items);
 
@@ -165,8 +170,8 @@ TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality_5dayOrLess") {
 TEST_CASE("UpdateQuality_BackstagePass_IncreaseInQuality_ZeroValueAtExpiration") {
 
     vector<Item> items;
-    Item testA("Backstage passes to a TAFKAL80ETC concert", 3, 10);
-    items.push_back(testA);
+    Item backstagePass(backstagePassName, 3, 10);
+    items.push_back(backstagePass);
 
     GildedRose app(items);
 
